@@ -190,9 +190,331 @@
       z-index: 1000;
       overflow: hidden;
     }
+
+    /* ---- THIEF CONTAINER ---- */
+    .thief-container {
+      position: fixed;
+      bottom: 20%;
+      left: -120px;
+      z-index: 2000;
+    }
+
+    .thief {
+      position: relative;
+      width: 70px;
+      height: 90px;
+    }
+
+    .head {
+      position: absolute;
+      top: 0;
+      left: 16px;
+      width: 28px;
+      height: 26px;
+      background: #f5c6a0;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .mask {
+      position: absolute;
+      top: 6px;
+      left: 16px;
+      width: 28px;
+      height: 12px;
+      background: #111;
+      border-radius: 8px;
+      z-index: 3;
+    }
+
+    .eye {
+      position: absolute;
+      top: 9px;
+      width: 5px;
+      height: 5px;
+      background: white;
+      border-radius: 50%;
+      z-index: 4;
+    }
+
+    .eye.left {
+      left: 21px;
+    }
+
+    .eye.right {
+      left: 34px;
+    }
+
+    .hat {
+      position: absolute;
+      top: -6px;
+      left: 13px;
+      width: 34px;
+      height: 18px;
+      background: #111;
+      border-radius: 12px 12px 0 0;
+      z-index: 5;
+    }
+
+    .body {
+      position: absolute;
+      top: 24px;
+      left: 12px;
+      width: 36px;
+      height: 32px;
+      background: repeating-linear-gradient(0deg, #111 0px, #111 6px, #eee 6px, #eee 12px);
+      border-radius: 6px;
+      z-index: 1;
+    }
+
+    .arm {
+      position: absolute;
+      top: 26px;
+      width: 9px;
+      height: 26px;
+      background: repeating-linear-gradient(0deg, #111 0px, #111 5px, #eee 5px, #eee 10px);
+      border-radius: 4px;
+      transform-origin: top center;
+      z-index: 2;
+    }
+
+    .arm.left {
+      left: 5px;
+    }
+
+    .arm.right {
+      left: 46px;
+      z-index: 0;
+    }
+
+    .leg {
+      position: absolute;
+      top: 52px;
+      width: 11px;
+      height: 30px;
+      background: #111;
+      border-radius: 4px;
+      transform-origin: top center;
+    }
+
+    .leg.left {
+      left: 16px;
+    }
+
+    .leg.right {
+      left: 33px;
+    }
+
+    /* Dust */
+    .dust {
+      position: absolute;
+      bottom: 0;
+      width: 8px;
+      height: 8px;
+      background: #bbb;
+      border-radius: 50%;
+      opacity: 0;
+    }
+
+    /* ---- SPEECH BUBBLE ---- */
+    .bubble {
+      position: absolute;
+      top: -50px;
+      left: -10px;
+      background: white;
+      border: 2px solid #333;
+      border-radius: 14px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-family: 'Georgia', serif;
+      white-space: nowrap;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.3s ease;
+      z-index: 20;
+    }
+
+    .bubble.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 20px;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 8px solid white;
+    }
+
+    .bubble::before {
+      content: '';
+      position: absolute;
+      bottom: -11px;
+      left: 19px;
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      border-top: 9px solid #333;
+    }
+
+    /* ======= SNEAKING ======= */
+    .sneaking .thief {
+      transform: scaleX(1) rotate(8deg);
+      animation: sneakBob 0.6s ease-in-out infinite;
+    }
+
+    .sneaking .leg.left   {
+      animation: sneakLegL 0.6s ease-in-out infinite alternate;
+    }
+
+    .sneaking .leg.right  {
+      animation: sneakLegR 0.6s ease-in-out infinite alternate;
+    }
+
+    .sneaking .arm.left   {
+      animation: sneakArmL 0.6s ease-in-out infinite alternate;
+    }
+
+    .sneaking .arm.right  {
+      animation: sneakArmR 0.6s ease-in-out infinite alternate;
+    }
+
+    @keyframes sneakBob {
+      0%, 100% { transform: rotate(8deg) translateY(0); }
+      50%      { transform: rotate(8deg) translateY(-3px); }
+    }
+
+    @keyframes sneakLegL  {
+      from { transform: rotate(-15deg); }
+      to { transform: rotate(15deg); }
+    }
+
+    @keyframes sneakLegR  {
+      from { transform: rotate(15deg); }
+      to { transform: rotate(-15deg); }
+    }
+
+    @keyframes sneakArmL  {
+      from { transform: rotate(10deg); }
+      to { transform: rotate(-10deg); }
+    }
+
+    @keyframes sneakArmR  {
+      from { transform: rotate(-10deg); }
+      to { transform: rotate(10deg); }
+    }
+
+    /* ======= RUNNING ======= */
+    .running .leg.left   {
+      animation: legL 0.2s ease-in-out infinite alternate;
+    }
+
+    .running .leg.right  {
+      animation: legR 0.2s ease-in-out infinite alternate;
+    }
+
+    .running .arm.left   {
+      animation: armL 0.2s ease-in-out infinite alternate;
+    }
+
+    .running .arm.right  {
+      animation: armR 0.2s ease-in-out infinite alternate;
+    }
+
+    .running .thief      {
+      animation: runBounce 0.2s ease-in-out infinite alternate;
+    }
+
+    .running .dust       {
+      animation: dustPuff 0.4s ease-out infinite;
+    }
+
+    .running .dust:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    .running .dust:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    @keyframes legL  {
+      from { transform: rotate(-35deg); }
+      to { transform: rotate(35deg); }
+    }
+
+    @keyframes legR  {
+      from { transform: rotate(35deg); }
+      to { transform: rotate(-35deg); }
+    }
+
+    @keyframes armL  {
+      from { transform: rotate(30deg); }
+      to { transform: rotate(-30deg); }
+    }
+
+    @keyframes armR  {
+      from { transform: rotate(-30deg); }
+      to { transform: rotate(30deg); }
+    }
+
+    @keyframes runBounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-6px); }
+    }
+
+    /* ======= IDLE ======= */
+    .idle .thief         {
+      animation: idleBreathe 1s ease-in-out infinite alternate;
+    }
+
+    .idle .arm.left      {
+      transform: rotate(5deg);
+    }
+
+    .idle .arm.right     {
+      transform: rotate(-5deg);
+    }
+
+    @keyframes idleBreathe {
+      from { transform: translateY(0); }
+      to { transform: translateY(-2px); }
+    }
+
+    @keyframes dustPuff {
+      0%   { opacity: 0.5; transform: translate(0,0) scale(1); }
+      100% { opacity: 0; transform: translate(-18px,-8px) scale(1.8); }
+    }
+
+    .grabbing .arm.right {
+      animation: grabReach 0.4s forwards !important;
+    }
+
+    @keyframes grabReach {
+      0%   { transform: rotate(0deg); }
+      50%  { transform: rotate(-60deg); }
+      100% { transform: rotate(-10deg); }
+    }
+
+    /* Card grabbed animation */
+    .card-stolen {
+      animation: cardGrabbed 0.3s forwards;
+    }
+
+    @keyframes cardGrabbed {
+      to { transform: scale(0.5); opacity: 0; }
+    }
+
+    .stolen-card {
+      position: relative;
+      z-index: 1999;
+    }
   </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
  </head>
  <body class="h-full">
   <div id="heart-container"></div>
@@ -222,8 +544,8 @@
     </audio><!-- Game Screen -->
     <div id="game-screen" class="min-h-full p-4 md:p-8 pt-12 md:pt-16"><!-- Header -->
      <div class="text-center mb-8">
-      <h1 id="game-title" class="font-script text-5xl md:text-6xl mb-4" style="color: #8b2e2e;">Select 13 cards</h1>
-      <div class="mt-6 flex items-center justify-center gap-3"><span class="font-crimson text-xl font-semibold" style="color: #8b2e2e;" id="counter">0</span> <span class="font-spectral" style="color: #6b4a3a;">/</span> <span class="font-crimson text-xl font-semibold" style="color: #8b2e2e;">13</span> <span class="font-spectral ml-3" style="color: #6b4a3a;">cards selected</span>
+      <h1 id="game-title" class="font-script text-5xl md:text-6xl mb-4" style="color: #8b2e2e;">Select 14 cards</h1>
+      <div class="mt-6 flex items-center justify-center gap-3"><span class="font-crimson text-xl font-semibold" style="color: #8b2e2e;" id="counter">0</span> <span class="font-spectral" style="color: #6b4a3a;">/</span> <span class="font-crimson text-xl font-semibold" style="color: #8b2e2e;">14</span> <span class="font-spectral ml-3" style="color: #6b4a3a;">cards selected</span>
       </div>
      </div><!-- Music Button -->
      <div class="flex justify-center mb-8"><button id="music-button" class="group flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl" style="background: linear-gradient(135deg, #a84848 0%, #8b2e2e 100%); border: 2px solid #e8dcc8;">
@@ -269,11 +591,11 @@
         </div>
         <h1 class="font-old-english text-4xl md:text-6xl text-center mb-5" style="color: #1a1a1a; letter-spacing: 0.02em; font-weight: 400;">The Love Times</h1>
         <div class="text-center font-newspaper-body text-xs md:text-sm" style="color: #3a3a3a;">
-          <span>Vol. 2</span> <span>•</span> <span>Saturday, Feb 14th, 2026</span> <span>•</span> <span>Santa Clara, CA</span>
+          <span>Vol. 2</span> <span>•</span> <span>Saturday, Feb 14th, 2026</span> <span>•</span> <span>Hawkins, CA</span>
         </div>
        </div><!-- Headline -->
        <div class="text-center py-12 mb-10" style="border-bottom: 2px solid #2a2a2a;">
-        <h2 class="font-newspaper-title text-3xl md:text-5xl lg:text-6xl font-black leading-tight px-4" style="color: #631f1f;">Breaking News!<br>
+        <h2 class="font-newspaper-title text-3xl md:text-5xl lg:text-6xl font-black leading-tight px-4" style="color: #631f1f;">Breaking News:<br>
          The Perfect Heist!</h2>
        </div><!-- Image -->
        <div class="mt-10 flex justify-center">
@@ -321,7 +643,8 @@
       { rank: "10", word: "to" },
       { rank: "J", word: "belong" },
       { rank: "Q", word: "with" },
-      { rank: "K", word: "yours." }
+      { rank: "K", word: "yours." },
+      { rank: "HEART", word: "" }
     ];
 
     let availableCards = [];
@@ -337,7 +660,7 @@
     }
 
     function getRankValue(rank) {
-      const values = { 'A': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'J': 11, 'Q': 12, 'K': 13 };
+      const values = { 'A': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'J': 11, 'Q': 12, 'K': 13, 'HEART': 14 };
       return values[rank];
     }
 
@@ -345,27 +668,41 @@
       const card = document.createElement('div');
       card.className = `card w-16 h-24 md:w-20 md:h-28 flipped ${animate ? 'selected-card' : ''}`;
       card.dataset.rank = cardInfo.rank;
-      card.innerHTML = `
-        <div class="card-inner">
-          <div class="card-face card-back"></div>
-          <div class="card-face card-front p-1">
-            <span class="font-crimson text-xs md:text-sm absolute top-1 left-2" style="color: #c41e3a;">${cardInfo.rank}</span>
-            <svg class="w-3 h-3 md:w-4 md:h-4 absolute top-1 right-2" style="color: #c41e3a;" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-            </svg>
-            <span class="font-script text-sm md:text-base text-center px-1 font-bold" style="color: #5a2a2f;">${cardInfo.word}</span>
-            <span class="font-crimson text-xs md:text-sm absolute bottom-1 right-2 rotate-180" style="color: #c41e3a;">${cardInfo.rank}</span>
-            <svg class="w-3 h-3 md:w-4 md:h-4 absolute bottom-1 left-2 rotate-180" style="color: #c41e3a;" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-            </svg>
+
+      if (cardInfo.rank === "HEART") {
+        card.innerHTML = `
+          <div class="card-inner">
+            <div class="card-face card-back"></div>
+            <div class="card-face card-front p-1 flex items-center justify-center">
+              <svg class="w-12 h-12 md:w-16 md:h-16" style="color: #c41e3a;" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </div>
           </div>
-        </div>
-      `;
+        `;
+      } else {
+        card.innerHTML = `
+          <div class="card-inner">
+            <div class="card-face card-back"></div>
+            <div class="card-face card-front p-1">
+              <span class="font-crimson text-xs md:text-sm absolute top-1 left-2" style="color: #c41e3a;">${cardInfo.rank}</span>
+              <svg class="w-3 h-3 md:w-4 md:h-4 absolute top-1 right-2" style="color: #c41e3a;" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+              <span class="font-script text-sm md:text-base text-center px-1 font-bold" style="color: #5a2a2f;">${cardInfo.word}</span>
+              <span class="font-crimson text-xs md:text-sm absolute bottom-1 right-2 rotate-180" style="color: #c41e3a;">${cardInfo.rank}</span>
+              <svg class="w-3 h-3 md:w-4 md:h-4 absolute bottom-1 left-2 rotate-180" style="color: #c41e3a;" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </div>
+          </div>
+        `;
+      }
       return card;
     }
 
     function pickCard() {
-      if (selectedCards.length >= 13 || availableCards.length === 0) return;
+      if (selectedCards.length >= 14 || availableCards.length === 0) return;
       
       const randomIndex = Math.floor(Math.random() * availableCards.length);
       const pickedCard = availableCards.splice(randomIndex, 1)[0];
@@ -381,7 +718,7 @@
       }
 
       // Auto-scroll to show selected cards on mobile (after 2nd card)
-      if (selectedCards.length >= 2 && selectedCards.length < 13) {
+      if (selectedCards.length >= 2 && selectedCards.length < 14) {
         setTimeout(() => {
           const selectedCardsLabel = document.getElementById('selected-cards-label');
           selectedCardsLabel.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -390,7 +727,7 @@
 
       document.getElementById('counter').textContent = selectedCards.length;
 
-      if (selectedCards.length === 13) {
+      if (selectedCards.length === 14) {
         const deckPile = document.getElementById('deck-pile');
         deckPile.style.cursor = 'not-allowed';
         deckPile.style.opacity = '0.5';
@@ -514,6 +851,110 @@
       }, 700);
     }
 
+    function startThiefAnimation(onComplete) {
+      // Find the heart card
+      const selectedContainer = document.getElementById('selected-cards');
+      const cards = selectedContainer.children;
+      let heartCard = null;
+
+      for (let card of cards) {
+        if (card.dataset.rank === 'HEART') {
+          heartCard = card;
+          break;
+        }
+      }
+
+      if (!heartCard) {
+        if (onComplete) onComplete();
+        return;
+      }
+
+      // Scroll to the heart card so user can see the animation
+      heartCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Get the position of the heart card
+      const cardRect = heartCard.getBoundingClientRect();
+      const targetX = cardRect.left - 20;
+
+      // Create thief container
+      const tc = document.createElement('div');
+      tc.className = 'thief-container';
+      tc.id = 'tc';
+      tc.innerHTML = `
+        <div class="bubble" id="bubble"></div>
+        <div class="thief">
+          <div class="hat"></div>
+          <div class="head"></div>
+          <div class="mask"></div>
+          <div class="eye left"></div>
+          <div class="eye right"></div>
+          <div class="body"></div>
+          <div class="arm left"></div>
+          <div class="arm right"></div>
+          <div class="leg left"></div>
+          <div class="leg right"></div>
+        </div>
+        <div class="dust"></div>
+        <div class="dust"></div>
+        <div class="dust"></div>
+      `;
+      document.body.appendChild(tc);
+
+      const bubble = document.getElementById('bubble');
+
+      // Phase 1: Sneak in slowly, crouched and tiptoeing
+      tc.className = 'thief-container sneaking';
+
+      // Force a reflow so the thief starts at the initial position
+      void tc.offsetWidth;
+
+      tc.style.transition = 'left 3s ease-in-out';
+      tc.style.left = targetX + 'px';
+
+      // Phase 2: Stop near card, look around
+      setTimeout(() => {
+        tc.className = 'thief-container idle';
+        bubble.textContent = '👀 ...';
+        bubble.className = 'bubble show';
+      }, 3100);
+
+      // Phase 3: Grab it!
+      setTimeout(() => {
+        bubble.textContent = 'Mine! 😈';
+        tc.className = 'thief-container idle grabbing';
+        heartCard.className = heartCard.className + ' card-stolen';
+      }, 4100);
+
+      // Phase 4: Card gone
+      setTimeout(() => {
+        heartCard.style.display = 'none';
+      }, 4400);
+
+      // Phase 5: Sprint away!
+      setTimeout(() => {
+        bubble.textContent = '🏃💨';
+        tc.className = 'thief-container running';
+        tc.style.transition = 'left 1.2s ease-in';
+        tc.style.left = window.innerWidth + 200 + 'px';
+      }, 4800);
+
+      // Phase 6: Cleanup, show confetti, then call callback
+      setTimeout(() => {
+        tc.remove();
+        if (heartCard) {
+          heartCard.remove();
+        }
+
+        // Start confetti
+        startConfetti();
+
+        // Call the callback after confetti burst (after 2 seconds)
+        setTimeout(() => {
+          if (onComplete) onComplete();
+        }, 2000);
+      }, 6300);
+    }
+
     function revealMessage() {
       const sortedCards = [...selectedCards].sort((a, b) => getRankValue(a.rank) - getRankValue(b.rank));
 
@@ -542,17 +983,25 @@
       });
 
       setTimeout(() => {
-        const newspaper = document.getElementById('newspaper-reveal');
-        newspaper.classList.remove('hidden');
+        // DON'T show newspaper yet - wait for thief animation
 
-        // Scroll to show both cards and newspaper together
+        // Scroll to show cards
         setTimeout(() => {
           const selectedCardsLabel = document.getElementById('selected-cards-label');
           selectedCardsLabel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-          // Start confetti after scroll
+          // Start thief animation after scroll, THEN show newspaper when done
           setTimeout(() => {
-            startConfetti();
+            startThiefAnimation(() => {
+              // This callback runs AFTER thief animation completes
+              const newspaper = document.getElementById('newspaper-reveal');
+              newspaper.classList.remove('hidden');
+
+              // Scroll to newspaper after a brief delay
+              setTimeout(() => {
+                newspaper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }, 500);
+            });
           }, 600);
         }, 400);
       }, sortedCards.length * 100 + 800);
