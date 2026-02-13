@@ -645,19 +645,19 @@
     let config = { ...defaultConfig };
 
     const cardData = [
-      { rank: "A", word: "These" },
-      { rank: "2", word: "thirteen" },
-      { rank: "3", word: "hearts" },
+      { rank: "A", word: "Hearts" },
+      { rank: "2", word: "meant" },
+      { rank: "3", word: "to" },
       { rank: "4", word: "belong" },
-      { rank: "5", word: "together," },
-      { rank: "6", word: "and" },
-      { rank: "7", word: "mine" },
-      { rank: "8", word: "was" },
-      { rank: "9", word: "destined" },
-      { rank: "10", word: "to" },
-      { rank: "J", word: "belong" },
-      { rank: "Q", word: "with" },
-      { rank: "K", word: "yours." },
+      { rank: "5", word: "together" },
+      { rank: "6", word: "will" },
+      { rank: "7", word: "always" },
+      { rank: "8", word: "find" },
+      { rank: "9", word: "each" },
+      { rank: "10", word: "other," },
+      { rank: "J", word: "time" },
+      { rank: "Q", word: "and" },
+      { rank: "K", word: "again." },
       { rank: "HEART", word: "" }
     ];
 
@@ -717,10 +717,32 @@
 
     function pickCard() {
       if (selectedCards.length >= 14 || availableCards.length === 0) return;
-      
-      const randomIndex = Math.floor(Math.random() * availableCards.length);
-      const pickedCard = availableCards.splice(randomIndex, 1)[0];
-      
+
+      let pickedCard;
+      const isFirstPick = selectedCards.length === 0;
+      const isLastPick = selectedCards.length === 13;
+
+      // Ensure heart is not picked first or last
+      if (isFirstPick || isLastPick) {
+        // Filter out heart card for first and last picks
+        const nonHeartCards = availableCards.filter(card => card.rank !== 'HEART');
+        if (nonHeartCards.length > 0) {
+          const randomIndex = Math.floor(Math.random() * nonHeartCards.length);
+          pickedCard = nonHeartCards[randomIndex];
+          // Remove from availableCards
+          const actualIndex = availableCards.indexOf(pickedCard);
+          availableCards.splice(actualIndex, 1);
+        } else {
+          // Fallback if only heart is left (shouldn't happen with proper shuffling)
+          const randomIndex = Math.floor(Math.random() * availableCards.length);
+          pickedCard = availableCards.splice(randomIndex, 1)[0];
+        }
+      } else {
+        // Normal random pick for middle positions
+        const randomIndex = Math.floor(Math.random() * availableCards.length);
+        pickedCard = availableCards.splice(randomIndex, 1)[0];
+      }
+
       selectedCards.push(pickedCard);
 
       const selectedContainer = document.getElementById('selected-cards');
@@ -815,18 +837,18 @@
     }
 
     function triggerConfettiBurst() {
-      // Create confetti burst (40-60 pieces)
+      // Create confetti burst (40-60 pieces) - all at once for a pop effect
       const confettiCount = Math.floor(Math.random() * 21) + 40;
       for (let i = 0; i < confettiCount; i++) {
-        setTimeout(() => createConfettiPiece(), i * 10);
+        createConfettiPiece();
       }
     }
 
     function triggerConfettiBurstAtPosition(xPercent, yPercent) {
-      // Create confetti burst at specific position (40-60 pieces)
+      // Create confetti burst at specific position (40-60 pieces) - all at once for a pop effect
       const confettiCount = Math.floor(Math.random() * 21) + 40;
       for (let i = 0; i < confettiCount; i++) {
-        setTimeout(() => createConfettiPieceAt(xPercent, yPercent), i * 10);
+        createConfettiPieceAt(xPercent, yPercent);
       }
     }
 
@@ -1018,18 +1040,20 @@
               const newspaper = document.getElementById('newspaper-reveal');
               newspaper.classList.remove('hidden');
 
-              // Scroll to start with margin offset to show Valentine's Edition and newspaper title
-              newspaper.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-
-              // Wait for scroll to complete, then trigger confetti over breaking news headline
+              // Wait a moment for newspaper to render, then smooth autoscroll
               setTimeout(() => {
-                triggerConfettiBurstAtPosition(50, 42); // Position over Breaking News text
+                newspaper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-                // Start heart rain after confetti bursts
+                // Wait for scroll animation to complete (smooth scroll takes ~1 second), then trigger confetti
                 setTimeout(() => {
-                  startHeartRain();
-                }, 500);
-              }, 800);
+                  triggerConfettiBurstAtPosition(50, 42); // Position over Breaking News text
+
+                  // Wait for confetti animation to fully complete (2.5s duration) before starting heart rain
+                  setTimeout(() => {
+                    startHeartRain();
+                  }, 2800);
+                }, 1200); // Wait for scroll to finish
+              }, 100);
             });
           }, 600);
         }, 400);
@@ -1037,7 +1061,7 @@
     }
 
     function resetGame() {
-      availableCards = [...cardData];
+      availableCards = shuffleArray(cardData);
       selectedCards = [];
       
       const deckPile = document.getElementById('deck-pile');
